@@ -1,0 +1,12 @@
+out
+target/
+lib/
+.classpath
+.project
+# IDEA artifacts and output dirs
+*.iml
+*.ipr
+*.iws
+.idea
+out
+test-output

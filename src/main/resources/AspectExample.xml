@@ -1,0 +1,38 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+	http://www.springframework.org/schema/beans/spring-beans-3.0.xsd 
+	http://www.springframework.org/schema/aop 
+	http://www.springframework.org/schema/aop/spring-aop-3.0.xsd ">
+
+	<aop:aspectj-autoproxy />
+
+	<bean id="user" class="com.aspectexample.user.impl.UserImpl" ></bean>
+
+	<!-- Aspect -->
+	<bean id="logAspect" class="com.aspectexample.aspect.LoggingAspect" />
+	
+	<aop:config>
+
+  <aop:aspect id="aspectLoggging" ref="logAspect">
+
+    <!-- @AfterReturning -->
+    <aop:pointcut id="pointCutAfterReturning"
+       expression="execution(* com.aspectexample.user.User.playlistReturnValue(..))" />
+
+    <aop:after-returning method="logAfterReturning"
+      returning="playlistName" pointcut-ref="pointCutAfterReturning" />
+	
+	<!-- @AfterThrowing -->
+    <aop:pointcut id="pointCutAfterThrowing"
+      expression="execution(* com.aspectexample.user.User.playlistExist(..))" />
+
+    <aop:after-throwing method="logAfterThrowing"
+      throwing="error" pointcut-ref="pointCutAfterThrowing" />
+   
+  </aop:aspect>
+
+</aop:config>
+	
+</beans>
